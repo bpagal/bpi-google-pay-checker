@@ -1,0 +1,19 @@
+name: BPI Google Pay Check
+on:
+  schedule:
+    - cron: "0 1,5,9,13 * * *" # 9am, 1pm, 5pm, 9pm PHT (UTC+8)
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run dev
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
